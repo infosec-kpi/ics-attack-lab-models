@@ -1,5 +1,5 @@
 from z3 import *
-
+import time
 
 opt = Optimize()
 
@@ -7,7 +7,7 @@ opt = Optimize()
 c1, c2, c3, c4, c5, c6 = Bools("c1 c2 c3 c4 c5 c6")
 p1, p2, p3 = Bools("p1 p2 p3")
 
-
+start_time = time.time()
 opt.add(p1 == True)
 
 
@@ -35,7 +35,9 @@ opt.maximize(Sum([If(p1, 1, 0), If(p2, 1, 0), If(p3, 1, 0)]))
 
 if opt.check() == sat:
     model = opt.model()
-   
+    end_time = time.time()
+    total_time = end_time - start_time
+    print(f"Total script time: {total_time:.6f} seconds")   
     for v in [c1, c2, c3, c4, c5, c6, p1, p2, p3]:
         print(f"{v}: {model[v]}")
 else:

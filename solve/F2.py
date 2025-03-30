@@ -1,5 +1,5 @@
 from z3 import *
-
+import time
 
 solver = Solver()
 
@@ -14,6 +14,7 @@ p1 = Bool('p1')
 p2 = Bool('p2')
 p3 = Bool('p3')
 
+start_time = time.time()
 condition = And(Or(x1,x2,p1),Or(x3,x4,x5,p2),Or(x6,p3))
 answers = []
 
@@ -45,7 +46,9 @@ for i in range(2**9):
     
     solver.pop()
 
-
+end_time = time.time()
+total_time = end_time - start_time
+print(f"Total script time: {total_time:.6f} seconds")
 if answers:
     with open("out2.2","w") as f:
         for a in answers:
